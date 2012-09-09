@@ -1,56 +1,96 @@
 var lineHeight = 16, leaveLines = 3, leaveHeight = leaveLines * lineHeight, 
 
 keysMap = {
-    'ctrl+n':'next',
-    'ctrl+p':'prior',
-    'ctrl+b':'back',
-    'ctrl+f':'forward',
-    'ctrl+e':'end',
-    'ctrl+a':'ahead',
-    'ctrl+v':'down',
-    'alt+v':'up',
-    'alt+shift+.':'bottom',
-    'alt+shift+,':'top'
+    'ctrl+n':'move-next',
+    'ctrl+p':'move-prior',
+    'ctrl+b':'back-history',
+    'ctrl+f':'forward-history',
+    'ctrl+e':'move-end',
+    'ctrl+a':'move-ahead',
+    'ctrl+v':'move-down',
+    'alt+v':'move-up',
+    'alt+shift+.':'move-bottom',
+    'alt+shift+,':'move-top',
+    'alt+n':'next-tab',
+    'alt+p':'previous-tab'
 },
 
 actions = {
-    'next': function(){
-        window.scrollBy(0, lineHeight);
+    'move-next': function(){
+        var offset = ((repeatedKeyStack.length > 7) ? 3 : 1) * lineHeight;
+        window.scrollBy(0, offset);
     },
-    'prior': function(){
-        window.scrollBy(0, -lineHeight);
+    'move-prior': function(){
+        var offset = ((repeatedKeyStack.length > 7) ? 3 : 1) * lineHeight;
+        window.scrollBy(0, -offset);
     },
-    'forward': function(){
+    'move-forward': function(){
         window.scrollBy(lineHeight, 0);
     },
-    'back': function(){
+    'move-back': function(){
         window.scrollBy(-lineHeight, 0);
     },
-    'end': function(){
+    'move-end': function(){
         window.scrollTo(document.body.scrollWidth, window.scrollY);
     },
-    'ahead': function(){
+    'move-ahead': function(){
         window.scrollTo(0, window.scrollY);
     },
-    'down': function(){
+    'move-down': function(){
 	    window.scrollBy(0, window.innerHeight - leaveHeight);
     },
-    'up': function(){
+    'move-up': function(){
         window.scrollBy(0, -window.innerHeight + leaveHeight);
     },
-    'bottom': function(){
+    'move-bottom': function(){
         window.scrollTo(window.scrollX, document.body.scrollHeight);
     },
-    'top': function(){
+    'move-top': function(){
         window.scrollTo(window.scrollX, 0 );
+    },
+    'forward-history': function(){
+	    window.history.go(1);
+	},
+	'back-history': function(){
+	    window.history.go(-1);
+	},
+    'next-tab':function () {
+        chrome.extension.sendMessage({method:'next-tab'});
+    },
+    'previous-tab':function () {
+        chrome.extension.sendMessage({method:'previous-tab'});
     }
-}
+},
+
+repeatedKeyStack = [], keyStack = [], repeatDelayChecker,
+repeatInvalidTime = 1000,
+
+keyHandler = function (key) {
+    if (keyStack[0] == key) { // repeated
+        repeatedKeyStack.unshift(key);
+        // delay for repeat
+        clearTimeout(repeatDelayChecker);
+        repeatDelayChecker = setTimeout(
+            function () {
+                clearTimeout(repeatDelayChecker);
+                repeatedKeyStack = [];
+            }, repeatInvalidTime);
+    } else {
+        repeatedKeyStack = [key];
+    }
+    keyStack.unshift(key);
+};
 
 for(var k in keysMap) {
     if (keysMap.hasOwnProperty(k)) {
-        var actName = keysMap[k];
-        if (actions.hasOwnProperty(actName)) {
-            key(k, actions[actName]);
+        var actionName = keysMap[k];
+        if (actions.hasOwnProperty(actionName)) {
+            key(k, function (event, handler) {
+                    var k = handler.shortcut;
+                    keyHandler(k);
+                    var actionName = keysMap[k];
+                    actions[actionName]();
+                });
         }
     }
 }
