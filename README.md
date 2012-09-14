@@ -7,17 +7,26 @@ But I want to keep it simple and small.
 
 ##Default keys:
 ###  Move
-* `ctrl+n`: move to next line
-* `ctrl+p`: move to prior line
-* `ctrl+e`: move to right of page
-* `ctrl+a`: move to left of page
-* `ctrl+v`: page down
-* `alt+v`: page up
-* `alt+shift+>`: move to bottom
-* `alt+shift+<`: move to top
-* `ctrl+b`: back history
-* `ctrl+f`: forward-history
+* `C-n`: move to next line
+* `C-p`: move to prior line
+* `C-e`: move to right of page
+* `C-a`: move to left of page
+* `C-v`: page down
+* `C-v`: page up
+* `M-shift->`: move to bottom
+* `M-shift-<`: move to top
+* `C-b`: back history
+* `C-f`: forward-history
 
-### Page
-* alt+n: next tab
-* alt+p: previous tab
+### Tab
+* `M-n`: next tab
+* `M-p`: previous tab
+
+### Open links
+* `C-x C-f`: show links
+* `number enter`: go to that link
+
+Keys already supported by the browser/OS won't  include in this ext.
+
+##TODO:
+* C / M key can be customized

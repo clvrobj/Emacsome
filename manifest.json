@@ -20,7 +20,8 @@
   "content_scripts": [{
       "matches": ["\u003Call_urls\u003E"],
       "run_at": "document_start",
-      "js": ["jquery-1.8.1.min.js", "keymaster.js", "content.js"],
+      "js": ["libs/jquery-1.8.1.min.js", "libs/mousetrap.js", "content.js"],
+      "css":["content.css"],
       "all_frames": true
     }],
  "icons": {
