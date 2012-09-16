@@ -26,7 +26,6 @@ But I want to keep it simple and small.
 * `C-x C-f`: show links
 * `number enter`: go to that link
 
-Keys already supported by the browser/OS won't  include in this ext.
-
 ##TODO:
 * C / M key customized
+* `C-h`: show help

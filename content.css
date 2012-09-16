@@ -1,1 +1,5 @@
 .link-index { position:absolute; top:0; left:0; background:rgba(203, 108, 0, 0.7); border-bottom:1px solid #8F4F07; border-radius:2px; padding:3px 4px; line-height:1; font-size:7px; color:white; font-weight:bold; white-space:nowrap }
+
+#toolbar { position:fixed; bottom:0; width:100%; min-height:36px; padding:7px; border-top:1px solid #BEBEBE; line-height:1.6; background-color:#282828; color:#61F41B }
+#toolbar .tab { display:inline-block; overflow:hidden; white-space:nowrap; max-width:160px }
+#toolbar .tab:before { content:"|"; padding:0 8px; }
