@@ -196,7 +196,7 @@ Actor.prototype.showAllTabs =function () {
     chrome.extension.sendMessage({method:'get-all-tabs'},
                                  function (tabs) {
                                      if (!this.toolBar) {
-                                         this.oolBar = $('<div id="toolbar"></div>').appendTo('body');
+                                         this.toolBar = $('<div id="toolbar"></div>').appendTo('body');
                                      }
                                      var tabsEl = [];
                                      for (var i=0; i<tabs.length; i++) {
