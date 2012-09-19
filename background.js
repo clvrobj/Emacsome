@@ -1,4 +1,4 @@
-var chromeselectSiblingTab = function (tab, step) {
+var selectSiblingTab = function (tab, step) {
     if (tab.index == 0 && step < 0) {
         chrome.tabs.query({windowId:tab.windowId},
                           function (tabs) {
