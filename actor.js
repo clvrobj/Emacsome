@@ -28,6 +28,7 @@ var Actor = function (producer) {
         'highlight-next-tab': this.highlightNextTabInToolbar,
         'highlight-previous-tab': this.highlightPreviousTabInToolbar,
         'active-tab':this.activeTab,
+        'close-current-tab':this.closeCurrentTab,
         'cancel': this.cancel
     };
     this.producer = producer;
@@ -169,4 +170,7 @@ Actor.prototype.openLink = function (data) {
         var link = $(this.shownLinks[index]).attr('href');
         window.location.href = link;
     }
+};
+Actor.prototype.closeCurrentTab = function () {
+    chrome.extension.sendMessage({method:'close-current-tab'});
 };

@@ -43,11 +43,16 @@ activeTab = function (request, sender, sendResponse) {
 
 },
 
+closeCurrentTab = function (request, sender, sendResponse) {
+    chrome.tabs.remove([sender.tab.id], function () {});
+};
+
 actions = {
     'next-tab': function (request, sender) { selectSiblingTab(sender.tab, 1);},
     'previous-tab': function (request, sender) { selectSiblingTab(sender.tab, -1);},
     'get-all-tabs': getAllTabs,
-    'active-tab': activeTab
+    'active-tab': activeTab,
+    'close-current-tab':closeCurrentTab
 };
 chrome.extension.onMessage.addListener(
     function(request, sender, sendResponse) {

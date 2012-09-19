@@ -78,6 +78,7 @@ DefaultDirector.prototype.getKeysMap = function () {
         'alt+p':'previous-tab',
         'ctrl+x ctrl+f':'show-links',
         'ctrl+x b':'show-all-tabs',
+        'ctrl+x k':'close-current-tab',
         'ctrl+g':'cancel',
         'esc':'cancel'
     };
@@ -130,6 +131,7 @@ LinkOpenDirector.prototype.getKeysMap = function () {
         'alt+n':'next-tab',
         'alt+p':'previous-tab',
         'ctrl+x ctrl+f':'show-links',
+        'ctrl+x k':'close-current-tab',
         'ctrl+g':'cancel',
         'esc':'cancel'
     };
