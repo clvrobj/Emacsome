@@ -63,7 +63,7 @@ Actor.prototype._findShownLinks = function () {
     this.shownLinks = this.links.filter(
         function () {
             var pos = $(this).offset();
-            return pos.top > t && pos.top < t + h;
+            return pos.top >= t && pos.top < t + h;
         });
     return this.shownLinks;
 };
