@@ -26,6 +26,7 @@ DEFAULT_KEYSMAP = {
     'ctrl+x b':'show-all-tabs',
     'ctrl+x k':'close-current-tab',
     'ctrl+x ctrl+r':'reload-tab',
+    'ctrl+h':'show-help',
     'ctrl+g':'cancel',
     'esc':'cancel'
 };

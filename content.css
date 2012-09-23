@@ -1,6 +1,12 @@
 .link-index { position:absolute; top:0; left:0; background:rgba(203, 108, 0, 0.7); border-bottom:1px solid #8F4F07; border-radius:2px; padding:3px 4px; line-height:1; font-size:7px; color:white; font-weight:bold; white-space:nowrap; z-index:9999 }
 
-#toolbar { position:fixed; left:0; bottom:0; width:100%; min-height:24px; padding:7px; border-top:1px solid #BEBEBE; line-height:1.6; background-color:rgba(41, 41, 41, 0.8); color:#61F41B; font-size:12px; font-weight:bold; text-align:left; z-index:9999; font-family:'Helvetica Neue', 'Hiragino Sans GB', Arial, Helvetica, sans-serif }
-#toolbar .tab { display:inline-block; overflow:hidden; white-space:nowrap; max-width:120px }
-#toolbar .tab.active { color:#A3D6F2 }
-#toolbar .tab:before { content:"|"; padding:0 10px; color:#61F41B }
+#emacsome-toolbar, #emacsome-help-wrap { position:fixed; z-index:9999; font-size:12px; font-family:'Helvetica Neue', 'Hiragino Sans GB', Arial, Helvetica, sans-serif; line-height:1.6; }
+#emacsome-toolbar { left:0; bottom:0; width:100%; min-height:24px; padding:7px; background-color:rgba(41, 41, 41, 0.8); color:#61F41B; text-align:left; border-top:1px solid #BEBEBE; font-weight:bold; }
+#emacsome-toolbar .tab { display:inline-block; overflow:hidden; white-space:nowrap; max-width:120px }
+#emacsome-toolbar .tab.active { color:#A3D6F2 }
+#emacsome-toolbar .tab:before { content:"|"; padding:0 10px; color:#61F41B }
+
+#emacsome-help-wrap { top:0; background-color:transparent; width:100%; }
+#emacsome-help { margin:0 auto; padding:20px; width:360px; border:1px solid #BEBEBE; background-color:#fff; font-size:14px; overflow:auto; height:100%; }
+#emacsome-help .key { display:inline-block; font-weight:bold; margin-right:12px; min-width:80px; text-align:right; }
+#emacsome-help .intro { display:inline-block; }

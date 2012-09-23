@@ -32,7 +32,36 @@ var Actor = function (producer) {
         'active-tab':this.activeTab,
         'close-current-tab':this.closeCurrentTab,
         'reload-tab':this.reloadTab,
+        'show-help': this.showHelp,
         'cancel': this.cancel
+    };
+    this.actionsIntro = {
+        'move-next': 'next line',
+        'move-prior': 'prior line',
+        'move-forward': 'move right',
+        'move-back': 'move left',
+        'move-end': 'far right of page',
+        'move-ahead': 'far left of page',
+        'move-down': 'page down',
+        'move-up': 'page up',
+        'move-bottom': 'move to page bottom',
+        'move-top': 'move to page top',
+        'forward-history': 'forward history',
+	    'back-history': 'back history',
+        'next-tab': 'next tab',
+        'previous-tab': 'prior tab',
+        'show-links': 'show links to open link in new tab',
+        'show-links-alternate': 'show links to open link in current tab',
+        'show-all-tabs': 'brows all tabs',
+        'open-link': 'open link in current tab',
+        'open-link-newtab': 'open link in new tab',
+        'highlight-next-tab': 'highlight next tab',
+        'highlight-previous-tab': 'highlight previous tab',
+        'active-tab': 'active highlighted tab',
+        'close-current-tab': 'close current tab',
+        'reload-tab': 'reload current tab',
+        'show-help': 'show help',
+        'cancel': 'cancel'
     };
     this.producer = producer;
 };
@@ -135,7 +164,7 @@ Actor.prototype.showAllTabs =function () {
                                  function (r) {
                                      var tabs = r.tabs, currentTab = r.currentTab;
                                      if (!actor.toolBar) {
-                                         actor.toolBar = $('<div id="toolbar"></div>').appendTo('body');
+                                         actor.toolBar = $('<div id="emacsome-toolbar"></div>').appendTo('body');
                                      }
                                      var tabsEl = [];
                                      for (var i=0; i<tabs.length; i++) {
@@ -170,6 +199,7 @@ Actor.prototype.activeTab = function () {
 Actor.prototype.cancel = function () {
     this._clearLinksMark();
     this._hideToolBar();
+    this._hideHelpWnd();
     this.producer.getDirector(DEFAULT_DIRECTOR);
 };
 Actor.prototype.openLink = function (data) {
@@ -191,4 +221,19 @@ Actor.prototype.closeCurrentTab = function () {
 };
 Actor.prototype.reloadTab = function () {
     chrome.extension.sendMessage({method:'reload-tab'});
+};
+Actor.prototype.showHelp = function () {
+    if (!this.helpWnd) {
+        this.helpWnd = $('<div id="emacsome-help-wrap"></div>').appendTo('body');
+    }
+    var keysMap = this.director.getKeysMap(), keys = _.keys(keysMap),
+    ul = $('<div id="emacsome-help"><ul></ul></div>').appendTo(this.helpWnd).children('ul');
+    for (var i=0; i<keys.length; i++) {
+        var k = keys[i];
+        ul.append('<li><div class="key">'.concat(k, '</div><div class="intro">', this.actionsIntro[keysMap[k]], '</div></li>'));
+    }
+    this.helpWnd.css('height', window.innerHeight).show();
+};
+Actor.prototype._hideHelpWnd = function () {
+    this.helpWnd.hide().empty();
 };
