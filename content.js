@@ -6,10 +6,9 @@
  */
 var Producer = function (type) {
     this.keys = [];
-    this.metaKey = DEFAULT_METAKEY;
     var producer = this;
     chrome.extension.sendMessage({method:'get-localstorage', key:METAKEY_STORE}, function (response) {
-                                     producer.metaKey = response.data;
+                                     producer.metaKey = response.data ? response.data : DEFAULT_METAKEY;
                                      producer.actor = new Actor(producer);
                                      producer.director = producer.getDirector(DEFAULT_DIRECTOR);
                                      producer.actor.setDirector(producer.director);
