@@ -5,6 +5,9 @@ TABSELECT_DIRECTOR = 1,
 LINKOPEN_DIRECTOR = 2,
 LINKOPEN_ALTERNATE_DIRECTOR = 3,
 
+DEFAULT_METAKEY = 'alt',
+METAKEY_STORE = 'meta-key', // the key store in the localstorage
+
 DEFAULT_KEYSMAP = {
     'ctrl+n':'move-next',
     'ctrl+p':'move-prior',
@@ -13,11 +16,11 @@ DEFAULT_KEYSMAP = {
     'ctrl+e':'move-end',
     'ctrl+a':'move-ahead',
     'ctrl+v':'move-down',
-    'alt+v':'move-up',
-    'alt+shift+.':'move-bottom',
-    'alt+shift+,':'move-top',
-    'alt+n':'next-tab',
-    'alt+p':'previous-tab',
+    'meta+v':'move-up',
+    'meta+shift+.':'move-bottom',
+    'meta+shift+,':'move-top',
+    'meta+n':'next-tab',
+    'meta+p':'previous-tab',
     'ctrl+x ctrl+f':'show-links',
     'ctrl+x ctrl+v':'show-links-alternate',
     'ctrl+x b':'show-all-tabs',

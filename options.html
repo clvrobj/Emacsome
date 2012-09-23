@@ -1,0 +1,36 @@
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <style type="text/css">
+    body { margin:15px auto; width: 480px; color: #555; font-family: helvetica; font-size: 16px; line-height:1.5; }
+    .footer { margin-top:35px; color:#888; }
+    h1 { font-size:19px; text-align:center; }
+    ul, ol { list-style-type:none; display:block; margin:0; padding:0; }
+    ul li { line-height:2.6; }
+    a:link, a:visited, a:hover, a:active { text-decoration:none; }
+    #alert { padding:5px; color:red; display:none; }
+  </style>
+  <script type="text/javascript" src="libs/jquery-1.8.1.min.js"></script>
+  <script type="text/javascript" src="consts.js"></script>
+  <script type="text/javascript" src="options.js"></script>
+</head>
+<body>
+  <h1>Emacsome</h1>
+  <ul>
+    <li>
+      <label>Meta key:</label>
+      <select id="meta-key">
+        <option value="alt">Alt</option>
+        <option value="command">Command</option>
+      </select>
+    </li>
+    <li>
+    </li>
+    <li>
+      <input id="save" name="save" type="submit" value="Save" />
+    </li>
+    <li>
+      <div id="alert">Saved! Please reload tabs to apply the change.</div>
+    </li>
+  </ul>
+  <div class="footer">Made by <a target="_blank" href="http://zhangchi.de">Zhang Chi</a></div>
+</body>

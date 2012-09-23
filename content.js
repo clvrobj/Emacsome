@@ -6,9 +6,14 @@
  */
 var Producer = function (type) {
     this.keys = [];
-    this.actor = new Actor(this);
-    this.director = this.getDirector(DEFAULT_DIRECTOR);
-    this.actor.setDirector(this.director);
+    this.metaKey = DEFAULT_METAKEY;
+    var producer = this;
+    chrome.extension.sendMessage({method:'get-localstorage', key:METAKEY_STORE}, function (response) {
+                                     producer.metaKey = response.data;
+                                     producer.actor = new Actor(producer);
+                                     producer.director = producer.getDirector(DEFAULT_DIRECTOR);
+                                     producer.actor.setDirector(producer.director);
+                                 });
 };
 Producer.prototype.getDirector = function (type) {
     switch (type) {

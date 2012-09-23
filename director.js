@@ -16,7 +16,27 @@ var BaseDirector = function (producer, actor) {
     this.bindKeys();
 };
 BaseDirector.prototype.getKeysMap = function () {
-    return {};
+    if (!this.keysMap) {
+        this.keysMap = this.parseKeys({});
+    }
+    return this.keysMap;
+};
+BaseDirector.prototype.parseKeys = function (keysMap) {
+    // currently mainly parse the meta key to the user customized key
+    var meta = 'meta', keys = _.keys(keysMap), keysWithMeta = [],
+    metaKey = this.producer.metaKey;
+    for (var i=0; i<keys.length; i++) {
+        var k = keys[i];
+        if (k.indexOf(meta) != -1) {
+            keysWithMeta.push(k);
+        }
+    }
+    for (var j=0; j<keysWithMeta.length; j++) {
+        var k = keysWithMeta[j], v = keysMap[k];
+        keysMap[k.replace(meta, metaKey)] = v;
+        delete keysMap[k];
+    }
+    return keysMap;
 };
 BaseDirector.prototype.sayAction = function (key) {
     this._globalKeyHandler(key);
@@ -63,7 +83,10 @@ var DefaultDirector = function (producer, actor) {
 };
 extend(DefaultDirector, BaseDirector);
 DefaultDirector.prototype.getKeysMap = function () {
-    return DEFAULT_KEYSMAP;
+    if (!this.keysMap) {
+        this.keysMap = this.parseKeys(DEFAULT_KEYSMAP);
+    }
+    return this.keysMap;
 };
 DefaultDirector.prototype.sayAction = function (key) {
     this.constructor.uber.sayAction.call(this, key);
@@ -76,13 +99,16 @@ var TabSelectDirector = function (producer, actor) {
 };
 extend(TabSelectDirector, BaseDirector);
 TabSelectDirector.prototype.getKeysMap = function () {
-    return {
-        'ctrl+s':'highlight-next-tab',
-        'ctrl+r':'highlight-previous-tab',
-        'ctrl+g':'cancel',
-        'enter':'active-tab',
-        'esc':'cancel'
-    };
+    if (!this.keysMap) {
+        this.keysMap = this.parseKeys(
+            {'ctrl+s':'highlight-next-tab',
+             'ctrl+r':'highlight-previous-tab',
+             'ctrl+g':'cancel',
+             'enter':'active-tab',
+             'esc':'cancel'
+            });
+    }
+    return this.keysMap;
 };
 
 var LinkOpenDirector = function (producer, actor) {
@@ -99,8 +125,11 @@ var LinkOpenDirector = function (producer, actor) {
 };
 extend(LinkOpenDirector, BaseDirector);
 LinkOpenDirector.prototype.getKeysMap = function () {
-    var keysMap = DEFAULT_KEYSMAP;
-    delete keysMap['ctrl+x b'];
+    if (!this.keysMap) {
+        var keysMap = DEFAULT_KEYSMAP;
+        delete keysMap['ctrl+x b'];
+        this.keysMap = this.parseKeys(keysMap);
+    }
     return keysMap;
 };
 LinkOpenDirector.prototype.bindKeys = function () {
@@ -129,8 +158,11 @@ var LinkOpenAlternateDirector = function (producer, actor) {
 };
 extend(LinkOpenAlternateDirector, BaseDirector);
 LinkOpenAlternateDirector.prototype.getKeysMap = function () {
-    var keysMap = DEFAULT_KEYSMAP;
-    delete keysMap['ctrl+x b'];
+    if (!this.keysMap) {
+        var keysMap = DEFAULT_KEYSMAP;
+        delete keysMap['ctrl+x b'];
+        this.keysMap = this.parseKeys(keysMap);
+    }
     return keysMap;
 };
 LinkOpenAlternateDirector.prototype.bindKeys = function () {
@@ -139,7 +171,7 @@ LinkOpenAlternateDirector.prototype.bindKeys = function () {
 };
 LinkOpenAlternateDirector.prototype.sayAction = function (key) {
     if (_.isNumber(key)) {
-        this.actor.perform('open-link', {index:key});
+        this.actor.perform('open-link-newtab', {index:key});
         return;
     }
     this.constructor.uber.sayAction.call(this, key);

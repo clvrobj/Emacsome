@@ -45,11 +45,15 @@ activeTab = function (request, sender, sendResponse) {
 
 reloadTab = function (request, sender, sendResponse) {
     chrome.tabs.reload();
-}
+},
 
 closeCurrentTab = function (request, sender, sendResponse) {
     chrome.tabs.remove([sender.tab.id], function () {});
-};
+},
+
+getLocalstorage = function (request, sender, sendResponse) {
+    sendResponse({data:localStorage[request.key]});
+}
 
 actions = {
     'next-tab': function (request, sender) { selectSiblingTab(sender.tab, 1);},
@@ -57,7 +61,8 @@ actions = {
     'get-all-tabs': getAllTabs,
     'active-tab': activeTab,
     'reload-tab':reloadTab,
-    'close-current-tab':closeCurrentTab
+    'close-current-tab':closeCurrentTab,
+    'get-localstorage':getLocalstorage
 };
 chrome.extension.onMessage.addListener(
     function(request, sender, sendResponse) {
