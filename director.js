@@ -130,7 +130,7 @@ LinkOpenDirector.prototype.getKeysMap = function () {
         delete keysMap['ctrl+x b'];
         this.keysMap = this.parseKeys(keysMap);
     }
-    return keysMap;
+    return this.keysMap;
 };
 LinkOpenDirector.prototype.bindKeys = function () {
     this.producer.bindNumKeys();
@@ -163,7 +163,7 @@ LinkOpenAlternateDirector.prototype.getKeysMap = function () {
         delete keysMap['ctrl+x b'];
         this.keysMap = this.parseKeys(keysMap);
     }
-    return keysMap;
+    return this.keysMap;
 };
 LinkOpenAlternateDirector.prototype.bindKeys = function () {
     this.producer.bindNumKeys();
