@@ -1,7 +1,7 @@
 {
   "name": "Emacsome",
-  "version": "0.93",
-  "description": "Yet another chrome ext for simulate emacs keys",
+  "version": "0.96",
+  "description": "Emacs key commands to operate browser!",
   "manifest_version": 2,
   "content_security_policy": "script-src 'self'; object-src 'self'",
   "browser_action": {
@@ -12,6 +12,7 @@
   "permissions": [
     "tabs","bookmarks","clipboardRead","\u003Call_urls\u003E"
   ],
+  "options_page": "options.html",
   "background": {
     "scripts": ["background.js"]
   },
