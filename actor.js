@@ -22,13 +22,16 @@ var Actor = function (producer) {
 	    'back-history': this.backHistory,
         'next-tab': this.nextTab,
         'previous-tab': this.previousTab,
-        'show-links': this.showLinks,
+        'show-links': this.showLinks, // will open link in new tab
+        'show-links-alternate': this.showLinksAlternate, // will open link in current tab
         'show-all-tabs': this.showAllTabs,
         'open-link': this.openLink,
+        'open-link-newtab': this.openLinkNewTab,
         'highlight-next-tab': this.highlightNextTabInToolbar,
         'highlight-previous-tab': this.highlightPreviousTabInToolbar,
         'active-tab':this.activeTab,
         'close-current-tab':this.closeCurrentTab,
+        'reload-tab':this.reloadTab,
         'cancel': this.cancel
     };
     this.producer = producer;
@@ -121,6 +124,11 @@ Actor.prototype.showLinks = function () {
     var links = this._findShownLinks();
     this._addLinksMark(links);
 };
+Actor.prototype.showLinksAlternate = function () {
+    this.producer.getDirector(LINKOPEN_ALTERNATE_DIRECTOR);
+    var links = this._findShownLinks();
+    this._addLinksMark(links);
+};
 Actor.prototype.showAllTabs =function () {
     var actor = this;
     chrome.extension.sendMessage({method:'get-all-tabs'},
@@ -171,6 +179,16 @@ Actor.prototype.openLink = function (data) {
         window.location.href = link;
     }
 };
+Actor.prototype.openLinkNewTab = function (data) {
+    var index = data.index;
+    if (this.shownLinks[index]) {
+        var link = $(this.shownLinks[index]).attr('href');
+        window.open(link);
+    }
+};
 Actor.prototype.closeCurrentTab = function () {
     chrome.extension.sendMessage({method:'close-current-tab'});
+};
+Actor.prototype.reloadTab = function () {
+    chrome.extension.sendMessage({method:'reload-tab'});
 };

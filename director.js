@@ -63,25 +63,7 @@ var DefaultDirector = function (producer, actor) {
 };
 extend(DefaultDirector, BaseDirector);
 DefaultDirector.prototype.getKeysMap = function () {
-    return {
-        'ctrl+n':'move-next',
-        'ctrl+p':'move-prior',
-        'ctrl+b':'back-history',
-        'ctrl+f':'forward-history',
-        'ctrl+e':'move-end',
-        'ctrl+a':'move-ahead',
-        'ctrl+v':'move-down',
-        'alt+v':'move-up',
-        'alt+shift+.':'move-bottom',
-        'alt+shift+,':'move-top',
-        'alt+n':'next-tab',
-        'alt+p':'previous-tab',
-        'ctrl+x ctrl+f':'show-links',
-        'ctrl+x b':'show-all-tabs',
-        'ctrl+x k':'close-current-tab',
-        'ctrl+g':'cancel',
-        'esc':'cancel'
-    };
+    return DEFAULT_KEYSMAP;
 };
 DefaultDirector.prototype.sayAction = function (key) {
     this.constructor.uber.sayAction.call(this, key);
@@ -117,24 +99,9 @@ var LinkOpenDirector = function (producer, actor) {
 };
 extend(LinkOpenDirector, BaseDirector);
 LinkOpenDirector.prototype.getKeysMap = function () {
-    return {
-        'ctrl+n':'move-next',
-        'ctrl+p':'move-prior',
-        'ctrl+b':'back-history',
-        'ctrl+f':'forward-history',
-        'ctrl+e':'move-end',
-        'ctrl+a':'move-ahead',
-        'ctrl+v':'move-down',
-        'alt+v':'move-up',
-        'alt+shift+.':'move-bottom',
-        'alt+shift+,':'move-top',
-        'alt+n':'next-tab',
-        'alt+p':'previous-tab',
-        'ctrl+x ctrl+f':'show-links',
-        'ctrl+x k':'close-current-tab',
-        'ctrl+g':'cancel',
-        'esc':'cancel'
-    };
+    var keysMap = DEFAULT_KEYSMAP;
+    delete keysMap['ctrl+x b'];
+    return keysMap;
 };
 LinkOpenDirector.prototype.bindKeys = function () {
     this.producer.bindNumKeys();
@@ -142,8 +109,40 @@ LinkOpenDirector.prototype.bindKeys = function () {
 };
 LinkOpenDirector.prototype.sayAction = function (key) {
     if (_.isNumber(key)) {
+        this.actor.perform('open-link-newtab', {index:key});
+        return;
+    }
+    this.constructor.uber.sayAction.call(this, key);
+};
+
+var LinkOpenAlternateDirector = function (producer, actor) {
+    this.producer = producer;
+    this.actor = actor;
+    this.repeatedKeyStack = [];
+    this.keyStack = [];
+    this.repeatDelayChecker = false;
+    this.repeatInvalidTime = 1000;
+    this.lineHeight = 16;
+    this.leaveLines = 3;
+    this.leaveHeight = this.leaveLines * this.lineHeight;
+    this.bindKeys();
+};
+extend(LinkOpenAlternateDirector, BaseDirector);
+LinkOpenAlternateDirector.prototype.getKeysMap = function () {
+    var keysMap = DEFAULT_KEYSMAP;
+    delete keysMap['ctrl+x b'];
+    return keysMap;
+};
+LinkOpenAlternateDirector.prototype.bindKeys = function () {
+    this.producer.bindNumKeys();
+    this.constructor.uber.bindKeys.call(this);
+};
+LinkOpenAlternateDirector.prototype.sayAction = function (key) {
+    if (_.isNumber(key)) {
         this.actor.perform('open-link', {index:key});
         return;
     }
     this.constructor.uber.sayAction.call(this, key);
 };
+
+

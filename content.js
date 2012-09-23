@@ -33,6 +33,13 @@ Producer.prototype.getDirector = function (type) {
         this.director = this.linkOpenDirector;
         this.actor.setDirector(this.director);
         break;
+    case LINKOPEN_ALTERNATE_DIRECTOR:
+        if (!this.linkOpenAlternateDirector) {
+            this.linkOpenAlternateDirector = new LinkOpenAlternateDirector(this, this.actor);
+        }
+        this.director = this.linkOpenAlternateDirector;
+        this.actor.setDirector(this.director);
+        break;
     default:
         break;
     }
