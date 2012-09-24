@@ -61,9 +61,9 @@ Producer.prototype.registerKeys = function (keys) {
 };
 Producer.prototype.bindNumKeys = function () {
     // must reverse the number sort for some mousetrap bug
-    for (var num=SHOWLINKS_COUNT; num>=0; --num) {
+    for (var num=0; num<SHOWLINKS_COUNT; num++) {
         var k = num.toString().split('').join(' ').concat(' enter');
-        if (!_.indexOf(this.keys, k, true) >= 0) {
+        if (_.indexOf(this.keys, k) == -1) {
             Mousetrap.bind(k, this._getKeyHandler(num), ['keydown']);
             this.keys.push(k);
         }

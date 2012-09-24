@@ -171,7 +171,7 @@ LinkOpenAlternateDirector.prototype.bindKeys = function () {
 };
 LinkOpenAlternateDirector.prototype.sayAction = function (key) {
     if (_.isNumber(key)) {
-        this.actor.perform('open-link-newtab', {index:key});
+        this.actor.perform('open-link', {index:key});
         return;
     }
     this.constructor.uber.sayAction.call(this, key);

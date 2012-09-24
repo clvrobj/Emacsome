@@ -208,6 +208,7 @@ Actor.prototype.openLink = function (data) {
         var link = $(this.shownLinks[index]).attr('href');
         window.location.href = link;
     }
+    this.cancel();
 };
 Actor.prototype.openLinkNewTab = function (data) {
     var index = data.index;
@@ -215,6 +216,9 @@ Actor.prototype.openLinkNewTab = function (data) {
         var link = $(this.shownLinks[index]).attr('href');
         window.open(link);
     }
+    //Notice: `18` and `8` both will response when key `1 8 enter`
+    // cancel after open one link and ignore the `8`
+    this.cancel();
 };
 Actor.prototype.closeCurrentTab = function () {
     chrome.extension.sendMessage({method:'close-current-tab'});
@@ -226,6 +230,7 @@ Actor.prototype.showHelp = function () {
     if (!this.helpWnd) {
         this.helpWnd = $('<div id="emacsome-help-wrap"></div>').appendTo('body');
     }
+    this.helpWnd.empty();
     var keysMap = this.director.getKeysMap(), keys = _.keys(keysMap),
     ul = $('<div id="emacsome-help"><ul></ul></div>').appendTo(this.helpWnd).children('ul');
     for (var i=0; i<keys.length; i++) {
@@ -235,5 +240,5 @@ Actor.prototype.showHelp = function () {
     this.helpWnd.css('height', window.innerHeight).show();
 };
 Actor.prototype._hideHelpWnd = function () {
-    this.helpWnd.hide().empty();
+    this.helpWnd && this.helpWnd.hide();
 };
