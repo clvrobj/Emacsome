@@ -1,5 +1,5 @@
 /*
- * Actor: 
+ * Actor:
  * execute low level functions;
  * communicate with background.js
  */

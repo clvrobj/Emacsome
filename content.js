@@ -71,7 +71,9 @@ Producer.prototype.bindNumKeys = function () {
 };
 Producer.prototype._getKeyHandler = function (key) {
     var producer = this;
-    return function () {
+    return function (e) {
+        e.preventDefault();
+        e.stopPropagation();
         producer.getDirector().sayAction(key);
     };
 };
